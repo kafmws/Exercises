@@ -1,0 +1,69 @@
+#define SIZE 3000
+
+int compare(const void *a, const void *b){
+    return *((int *)a)-*((int *)b);
+}
+
+int max(int a, int b){
+    return a>b?a:b;
+}
+
+int min(int a, int b){
+    return a>b?b:a;
+}
+
+int judge(int **re, int len , int a, int b, int c){//返回是否可用
+    //a,b,c升序传入，避免重复计算最值
+    for(int i = 0;i<len;i++){
+        //最值相同，重复
+        if(re[i][0]==a&&re[i][2]==c)
+            return 0;
+    }
+    return 1;
+}
+
+int** threeSum(int* nums, int numsSize, int* returnSize){
+    int cnt = 0;
+    //returnSize自己计算
+    int **re = NULL;
+    //int num[SIZE];
+    re = (int **)malloc(sizeof(int *)*SIZE);
+    for(int i = 0;i<SIZE;i++){
+        re[i]=(int *)malloc(sizeof(int)*4);
+        // if(re[i]==NULL)
+        //     puts("内存不够");
+    }
+    int *num = nums;
+    // for(int i=0;i<numsSize;i++){
+    //     num[i]=nums[i];
+    // }
+    qsort(num,numsSize,sizeof(int),compare);
+    for(int i = 0;i<numsSize-2;i++){
+        if(num[i]>0){
+            //printf("%d %d弹出",num[i],num[j]);
+            break;
+        }
+        for(int j = i+1;j<numsSize-1;j++){
+            for(int k = j+1;k<numsSize;k++){
+                if(num[i]+num[j]+num[k]==0){//num[i,j,k]升序
+                    if(judge(re,cnt,num[i],num[j],num[k])){
+                        // if(cnt>=1250)
+                        // printf("%d ",cnt);
+                        re[cnt][0]=num[i];
+                        re[cnt][1]=num[j];
+                        re[cnt][2]=num[k];
+                        cnt++;
+                    }
+                  }
+                else if(num[i]+num[j]>0){
+                    break;
+                }
+            }
+            if(num[i]+num[j]>0){
+                    break;
+                }
+        }
+    }
+    *returnSize = cnt;
+    return re;
+}
