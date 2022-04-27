@@ -1,2 +1,5 @@
 ﻿*.exe
 *.txt
+.idea/*
+Exercises.iml
+zztest/MainSolution.java
