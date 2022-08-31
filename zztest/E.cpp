@@ -53,87 +53,33 @@ auto tam = [] {
 #endif
 }();
 
-#if __cplusplus == 201703L
-#define tst 132
-#endif
-
-int n = 0, m = 0;
-char mm[53][53] = {0};
-
-
-void print() {
-  for (int i = 0; i < n; i++) {
-      for (int j = 0; j < m; j++) {
-        cout << mm[i][j];
-      }
-      cout << endl;
-    }
-}
-
-int match(int i, int j) {
-  int type = 0;
-  mm[i][j] = 0;
-  if (mm[i + 1][j] == '*') {
-    mm[i + 1][j] = 0;
-    if (mm[i + 1][j + 1] == '*') {
-      mm[i + 1][j + 1] = 0;
-      type = 1;
-    } else if (mm[i][j + 1] == '*') {
-      mm[i][j + 1] = 0;
-      type = 4;
-    } else if (mm[i + 1][j - 1] == '*') {
-      mm[i + 1][j - 1] = 0;
-      type = 2;
-    }
-  } else if (mm[i][j + 1] == mm[i + 1][j + 1] && mm[i][j + 1] == '*') {
-    mm[i][j + 1] = mm[i + 1][j + 1] = 0;
-    type = 3;
-  }
-  int ii = i - 1;
-  int jj = j - 1;
-  if (type == 2) jj--;
-  for (int x = 0; x < 4; x++) {
-    for (int y = 0; y < 4; y++) {
-      if (mm[ii + x][jj + y] == '*') {
-        if (!(type == 3 && x == 3 && y == 0 || type == 4 && x == 3 && y == 3)) {
-          type = 0;
-          break;
-        }
-      }
-    }
-  }
-  return type;
-}
-
 int main() {
   int cases;
   cin >> cases;
+  map<int, map<int, int>> m;
+  int h, w, hl, wl, hh, wh;
   while (cases--) {
-    for(int i = 0; i <= n; i++) memset(mm[i], 0, sizeof(mm[i]));
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++) {
-      for (int j = 1; j <= m; j++) {
-        cin >> mm[i][j];
-      }
+    int n, q;
+    cin >> n >> q;
+    m.clear();
+    for (int i = 0; i < n; i++) {
+      cin >> h >> w;
+      m[h][w]++;
     }
-    // for(int i = 0; i <= n; i++) mm[i][m+1] = 0; 
-    // for(int j = 0; j <= m; j++) mm[n+1][j] = 0;
-
-    int res = 1;
-
-    for (int i = 1; i <= n; i++) {
-      for (int j = 1; j <= m; j++) {
-        if (mm[i][j] == '*') {
-          if (!match(i, j)) {
-            res = 0;
-            // print();
-            goto label;
-          }
+    for (int i = 0; i < q; i++) {
+      long long sum = 0;
+      cin >> hl >> wl >> hh >> wh;
+      auto from = m.upper_bound(hl);
+      auto to = m.lower_bound(hh);
+      for (auto it = from; it != to; ++it) {
+        auto f = it->second.upper_bound(wl);
+        auto t = it->second.lower_bound(wh);
+        for (auto itt = f; itt != t; ++itt) {
+            sum += it->first * itt->first * itt->second;
         }
       }
+      cout << sum << endl;
     }
-  label:
-    cout << (res ? "YES" : "NO") << endl;
   }
 
   CHECKTIME

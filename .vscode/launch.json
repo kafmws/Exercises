@@ -18,7 +18,7 @@
             "externalConsole": true,
             "MIMode": "gdb",
             //这个按自己要用的gdb.exe的路径为准
-            "miDebuggerPath": "D:/software/Tools/mingw64/bin/gdb.exe",
+            "miDebuggerPath": "gdb.exe",
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",

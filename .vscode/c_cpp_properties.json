@@ -12,10 +12,10 @@
                 "_KAFM_"
             ],
             "windowsSdkVersion": "10.0.18362.0",
-            "compilerPath": "D:\\software\\Tools\\MinGW\\bin\\g++.exe",
+            "compilerPath": "g++.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "linux-clang-x64",
+            "intelliSenseMode": "windows-gcc-x64",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
